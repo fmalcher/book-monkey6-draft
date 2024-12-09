@@ -1,7 +1,6 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { BookStoreService } from '../../shared/book-store.service';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Book } from '../../shared/book';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-book-details',
@@ -11,14 +10,7 @@ import { Book } from '../../shared/book';
 })
 export class BookDetailsComponent {
   #service = inject(BookStoreService);
-  #route = inject(ActivatedRoute);
 
-  book = signal<Book | undefined>(undefined);
-
-  constructor() {
-    const isbn = this.#route.snapshot.paramMap.get('isbn');
-    if (isbn) {
-      this.book.set(this.#service.getSingle(isbn));
-    }
-  }
+  isbn = input.required<string>();
+  book = computed(() => this.#service.getSingle(this.isbn()))
 }
