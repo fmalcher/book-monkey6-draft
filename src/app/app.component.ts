@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { BookListComponent } from './books/book-list/book-list.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [BookListComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
