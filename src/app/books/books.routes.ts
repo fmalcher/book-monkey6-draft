@@ -4,11 +4,13 @@ import { BookDetailsComponent } from "./book-details/book-details.component";
 
 export const booksRoutes: Routes = [
   {
-    path: 'books',
+    path: '',
     component: BookListComponent,
   },
   {
-    path: 'books/:isbn',
+    path: ':isbn',
     component: BookDetailsComponent,
   }
 ];
+
+export default booksRoutes;
