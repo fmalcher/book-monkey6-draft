@@ -1,4 +1,4 @@
-@if (book(); as b) {
+@if (book.value(); as b) {
 <div class="details">
   <h1>{{ b.title }}</h1>
   @if (b.subtitle) {
@@ -28,6 +28,7 @@
 
   <a class="button arrow-left" routerLink="..">Back to list</a>
 
+  <a class="button" routerLink="/books/9783864909467">Angular Book</a>
   <button class="red" (click)="removeBook(b.isbn)">
     Remove book
   </button>

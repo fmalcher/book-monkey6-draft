@@ -1,7 +1,7 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { BookStoreService } from '../../shared/book-store.service';
 import { Router, RouterLink } from '@angular/router';
-import { Book } from '../../shared/book';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-book-details',
@@ -14,15 +14,10 @@ export class BookDetailsComponent {
   #router = inject(Router);
 
   isbn = input.required<string>();
-  book = signal<Book | undefined>(undefined);
-
-  constructor() {
-    effect(() => {
-      this.#service.getSingle(this.isbn()).subscribe(book => {
-        this.book.set(book);
-      });
-    });
-  }
+  book = rxResource({
+    request: this.isbn,
+    loader: ({ request }) => this.#service.getSingle(request)
+  });
 
   removeBook(isbn: string) {
     if (window.confirm('Remove book?')) {

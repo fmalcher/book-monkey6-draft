@@ -1,5 +1,9 @@
 <h1>Books</h1>
 
+<button (click)="books.reload()">RELOAD</button>
+
+@if (books.isLoading()) {<div>LOADING</div>}
+
 <div style="padding: 1em; background: #DDD">
   <h2>Favorite Books</h2>
   <button class="red" (click)="clearFavList()">Clear fav list</button>

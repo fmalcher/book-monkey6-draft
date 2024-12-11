@@ -2,6 +2,7 @@ import { Component, effect, signal, inject, computed } from '@angular/core';
 import { Book } from '../../shared/book';
 import { BookListItemComponent } from '../book-list-item/book-list-item.component';
 import { BookStoreService } from '../../shared/book-store.service';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-book-list',
@@ -12,28 +13,26 @@ import { BookStoreService } from '../../shared/book-store.service';
 export class BookListComponent {
   #service = inject(BookStoreService);
 
-  books = signal<Book[]>([]);
+  books = rxResource({ loader: () => this.#service.getAll() });
   favoriteBooks = signal<Book[]>([]);
 
   searchTerm = signal('');
 
   filteredBooks = computed(() => {
+    const books = this.books.value() || [];
+
     // Leerer Suchbegriff? Ganze Liste ausgeben
     if (!this.searchTerm()) {
-      return this.books();
+      return books;
     }
 
     const term = this.searchTerm().toLowerCase();
 
     // Liste filtern nach Suchbegriff im Titel
-    return this.books().filter(b => b.title.toLowerCase().includes(term));
+    return books.filter(b => b.title.toLowerCase().includes(term));
   })
 
   constructor() {
-    this.#service.getAll().subscribe(books => {
-      this.books.set(books);
-    });
-
     // Like-Liste aus Localstorage abrufen
     const fromStorage = localStorage.getItem('likedbooks');
     if (fromStorage) {
