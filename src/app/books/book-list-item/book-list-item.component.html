@@ -15,4 +15,5 @@
   </ul>
   <div>ISBN {{ b.isbn }}</div>
   <button (click)="addToFavs()">♥️ Favorite</button>
+  <a [routerLink]="b.isbn">Details</a>
 </div>
