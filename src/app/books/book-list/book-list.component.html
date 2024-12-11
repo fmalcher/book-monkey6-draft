@@ -8,8 +8,10 @@
   } @empty { No favorite books. }
 </div>
 
+<input type="search" #searchInput (input)="this.searchTerm.set(searchInput.value)" placeholder="Lokale Suche">
+
 <ul class="book-list">
-  @for (b of books(); track b.isbn) {
+  @for (b of filteredBooks(); track b.isbn) {
     <li>
       <app-book-list-item [book]="b" (favAdd)="addToFavs($event)"></app-book-list-item>
     </li>

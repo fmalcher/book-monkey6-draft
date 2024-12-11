@@ -1,4 +1,4 @@
-import { Component, effect, signal, inject } from '@angular/core';
+import { Component, effect, signal, inject, computed } from '@angular/core';
 import { Book } from '../../shared/book';
 import { BookListItemComponent } from '../book-list-item/book-list-item.component';
 import { BookStoreService } from '../../shared/book-store.service';
@@ -14,6 +14,20 @@ export class BookListComponent {
 
   books = signal<Book[]>([]);
   favoriteBooks = signal<Book[]>([]);
+
+  searchTerm = signal('');
+
+  filteredBooks = computed(() => {
+    // Leerer Suchbegriff? Ganze Liste ausgeben
+    if (!this.searchTerm()) {
+      return this.books();
+    }
+
+    const term = this.searchTerm().toLowerCase();
+
+    // Liste filtern nach Suchbegriff im Titel
+    return this.books().filter(b => b.title.toLowerCase().includes(term));
+  })
 
   constructor() {
     this.books.set(this.#service.getAll());
