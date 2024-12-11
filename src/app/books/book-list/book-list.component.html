@@ -1,9 +1,17 @@
 <h1>Books</h1>
 
+<div style="padding: 1em; background: #DDD">
+  <h2>Favorite Books</h2>
+  <button class="red" (click)="clearFavList()">Clear fav list</button>
+  @for (book of favoriteBooks(); track book.isbn) {
+    <p>{{ book.title }} ({{ book.isbn }})</p>
+  } @empty { No favorite books. }
+</div>
+
 <ul class="book-list">
   @for (b of books(); track b.isbn) {
     <li>
-      <app-book-list-item [book]="b"></app-book-list-item>
+      <app-book-list-item [book]="b" (favAdd)="addToFavs($event)"></app-book-list-item>
     </li>
   }
   @empty {

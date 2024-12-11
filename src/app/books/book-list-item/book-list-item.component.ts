@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Book } from '../../shared/book';
 
 @Component({
@@ -9,4 +9,9 @@ import { Book } from '../../shared/book';
 })
 export class BookListItemComponent {
   book = input.required<Book>();
+  favAdd = output<Book>();
+
+  addToFavs() {
+    this.favAdd.emit(this.book());
+  }
 }
