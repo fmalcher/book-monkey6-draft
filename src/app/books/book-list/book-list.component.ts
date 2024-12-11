@@ -1,9 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { Book } from '../../shared/book';
+import { BookListItemComponent } from '../book-list-item/book-list-item.component';
 
 @Component({
   selector: 'app-book-list',
-  imports: [],
+  imports: [BookListItemComponent],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.scss'
 })

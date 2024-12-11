@@ -2,23 +2,9 @@
 
 <ul class="book-list">
   @for (b of books(); track b.isbn) {
-  <li>
-    <div class="list-item">
-      <img [src]="b.imageUrl" alt="Cover">
-      <h2>{{ b.title }}</h2>
-      @if (b.subtitle) {
-      <p role="doc-subtitle">
-        {{ b.subtitle }}
-      </p>
-      }
-      <ul class="comma-list">
-        @for (author of b.authors; track $index) {
-        <li>{{ author }}</li>
-        }
-      </ul>
-      <div>ISBN {{ b.isbn }}</div>
-    </div>
-  </li>
+    <li>
+      <app-book-list-item [book]="b"></app-book-list-item>
+    </li>
   }
   @empty {
   <li>No books available.</li>
