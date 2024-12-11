@@ -1,6 +1,7 @@
-import { Component, effect, signal } from '@angular/core';
+import { Component, effect, signal, inject } from '@angular/core';
 import { Book } from '../../shared/book';
 import { BookListItemComponent } from '../book-list-item/book-list-item.component';
+import { BookStoreService } from '../../shared/book-store.service';
 
 @Component({
   selector: 'app-book-list',
@@ -9,32 +10,13 @@ import { BookListItemComponent } from '../book-list-item/book-list-item.componen
   styleUrl: './book-list.component.scss'
 })
 export class BookListComponent {
+  #service = inject(BookStoreService);
+
   books = signal<Book[]>([]);
   favoriteBooks = signal<Book[]>([]);
 
   constructor() {
-    this.books.set(
-      [
-        {
-          isbn: '12345',
-          title: 'Tierisch gut kochen',
-          authors: ['Mrs Chimp', 'Mr Gorilla'],
-          subtitle: 'Rezepte von Affe bis Zebra',
-          imageUrl: 'https://cdn.ng-buch.de/kochen.png',
-          description: 'Immer lecker und gut',
-          createdAt: new Date().toISOString()
-        },
-        {
-          isbn: '67890',
-          title: 'Backen mit Affen',
-          subtitle: 'Bananenbrot und mehr',
-          authors: ['Orang Utan'],
-          imageUrl: 'https://cdn.ng-buch.de/backen.png',
-          description: 'Tolle Backtipps für Mensch und Tier',
-          createdAt: new Date().toISOString()
-        }
-      ]
-    );
+    this.books.set(this.#service.getAll());
 
     // Like-Liste aus Localstorage abrufen
     const fromStorage = localStorage.getItem('likedbooks');
