@@ -27,5 +27,9 @@
   <img [src]="b.imageUrl" alt="Cover">
 
   <a class="button arrow-left" routerLink="..">Back to list</a>
+
+  <button class="red" (click)="removeBook(b.isbn)">
+    Remove book
+  </button>
 </div>
 }

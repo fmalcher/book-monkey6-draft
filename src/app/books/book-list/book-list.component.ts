@@ -30,7 +30,9 @@ export class BookListComponent {
   })
 
   constructor() {
-    this.books.set(this.#service.getAll());
+    this.#service.getAll().subscribe(books => {
+      this.books.set(books);
+    });
 
     // Like-Liste aus Localstorage abrufen
     const fromStorage = localStorage.getItem('likedbooks');
