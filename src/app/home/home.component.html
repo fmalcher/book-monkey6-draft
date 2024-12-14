@@ -1,1 +1,15 @@
-<p>home works!</p>
+<h1>Search Books</h1>
+
+<form>
+  <input type="search" [formControl]="searchControl" placeholder="Search">
+</form>
+
+@if (isLoading()) {<div>LOADING …</div>}
+
+@if (results().length) {
+  <h2>Search results</h2>
+
+  @for (b of results(); track b.isbn) {
+    <p><a [routerLink]="['/books', b.isbn]">{{ b.title }} ({{ b.isbn }})</a></p>
+  }
+}
