@@ -1,24 +1,22 @@
 import { inject, Injectable } from '@angular/core';
 import { Book } from './book';
-import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookStoreService {
 
-  #apiUrl = 'https://api5.angular-buch.com';
+  #apiUrl = 'https://api6.angular-buch.com';
   #http = inject(HttpClient);
 
   getAll(): Observable<Book[]> {
-    return this.#http.get<Book[]>(`${this.#apiUrl}/books`)
-      .pipe(map(books => books.map(toBook))); // HACK
+    return this.#http.get<Book[]>(`${this.#apiUrl}/books`);
   }
 
   getSingle(isbn: string): Observable<Book> {
-    return this.#http.get<Book>(`${this.#apiUrl}/books/${isbn}`)
-      .pipe(map(b => toBook(b))); // HACK
+    return this.#http.get<Book>(`${this.#apiUrl}/books/${isbn}`);
   }
 
   remove(isbn: string): Observable<unknown> {
@@ -26,22 +24,11 @@ export class BookStoreService {
   }
 
   create(book: Book): Observable<Book> {
-    return this.#http.post<Book>(`${this.#apiUrl}/books`, book)
-      .pipe(map(b => toBook(b))); // HACK
+    return this.#http.post<Book>(`${this.#apiUrl}/books`, book);
   }
 
   search(term: string): Observable<Book[]> {
-    return this.#http.get<Book[]>(`${this.#apiUrl}/books/search/${term}`)
-      .pipe(map(books => books.map(toBook))); // HACK
+    const params = new HttpParams().set('search', term);
+    return this.#http.get<Book[]>(`${this.#apiUrl}/books`, { params });
   }
-}
-
-// TEMPORARY HACK
-function toBook(data: any) {
-  const { thumbnailUrl, ...b } = data;
-  return {
-    ...b,
-    imageUrl: thumbnailUrl,
-    createdAt: new Date().toISOString()
-  };
 }
