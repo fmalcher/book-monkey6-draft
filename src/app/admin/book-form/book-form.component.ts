@@ -1,7 +1,6 @@
 import { Component, output } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Book } from '../../shared/book';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-book-form',

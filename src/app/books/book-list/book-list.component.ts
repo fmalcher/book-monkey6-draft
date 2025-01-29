@@ -1,48 +1,37 @@
-import { Component, effect, signal, inject, computed } from '@angular/core';
+import { Component, effect, signal, inject, computed, input, linkedSignal } from '@angular/core';
 import { Book } from '../../shared/book';
 import { BookListItemComponent } from '../book-list-item/book-list-item.component';
 import { BookStoreService } from '../../shared/book-store.service';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-book-list',
-  imports: [BookListItemComponent],
+  imports: [BookListItemComponent, FormsModule],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.scss'
 })
 export class BookListComponent {
   #service = inject(BookStoreService);
+  #router = inject(Router);
 
-  books = rxResource({ loader: () => this.#service.getAll() });
+  /*books = rxResource({
+    request: () => this.searchTerm(),
+    loader: ({ request }) => this.#service.search(request)
+  });*/
+
   favoriteBooks = signal<Book[]>([]);
 
-  searchTerm = signal('');
+  search = input<string>(); // Query-Parameter
+  searchTerm = linkedSignal(() => this.search() || ''); // finaler Suchbegriff
 
-  filteredBooks = computed(() => {
-    const books = this.books.value() || [];
-
-    // Leerer Suchbegriff? Ganze Liste ausgeben
-    if (!this.searchTerm()) {
-      return books;
-    }
-
-    const term = this.searchTerm().toLowerCase();
-
-    // Liste filtern nach Suchbegriff im Titel
-    return books.filter(b => b.title.toLowerCase().includes(term));
-  })
+  books = this.#service.getAll(this.searchTerm);
 
   constructor() {
-    // Like-Liste aus Localstorage abrufen
-    const fromStorage = localStorage.getItem('likedbooks');
-    if (fromStorage) {
-      this.favoriteBooks.set(JSON.parse(fromStorage));
-    }
-
-    // Like-Liste speichern, wenn sie sich ändert
+    // Suchbegriff in der URL aktualisieren
     effect(() => {
-      localStorage.setItem('likedbooks', JSON.stringify(this.favoriteBooks()));
-      console.log('Liked list written to storage');
+      this.#router.navigate([], { queryParams: { search: this.searchTerm() || null } });
     });
   }
 

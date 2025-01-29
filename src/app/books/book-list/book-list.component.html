@@ -12,10 +12,11 @@
   } @empty { No favorite books. }
 </div>
 
-<input type="search" #searchInput (input)="this.searchTerm.set(searchInput.value)" placeholder="Lokale Suche">
+<input type="search" #searchInput (input)="this.searchTerm.set(searchInput.value)" [value]="this.searchTerm()" placeholder="Lokale Suche">
+<input type="search" #searchInput [(ngModel)]="this.searchTerm" placeholder="Lokale Suche TDF">
 
 <ul class="book-list">
-  @for (b of filteredBooks(); track b.isbn) {
+  @for (b of books.value(); track b.isbn) {
     <li>
       <app-book-list-item [book]="b" (favAdd)="addToFavs($event)"></app-book-list-item>
     </li>
