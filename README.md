@@ -8,18 +8,18 @@
 ## Entwurf für Struktur Praxisteil
 
 
-### [THEORIE] Komponenten, Signals Intro
+### [THEORIE] Komponenten
 
 - Template-Syntax: Interpolation, for, if, let
+- Signals Basics: Idee, `signal()`, Getter, `.set()`/`.update()`
 
 ### [BM] Buchliste
 
 - BookListComponent mit statischen Büchern
 - Interface Book
-  - kein Datum
-  - optionales Feld? Brauchen wir für `@if`
-  - createdAt
-- Signal für die Buchliste
+  - `createdAt` (Erstellungsdatum des Datensatzes)
+  - optionales Feld `subtitle` (für `@if` im Template)
+- Signal `books` für die Buchliste, `@for` im Template (Variable `b`)
 
 ### [THEORIE] Property Bindings, Inputs
 
@@ -34,18 +34,18 @@
 
 ### [BM] Event Binding Favoritenliste
 
-- lokale Favoritenliste in der BookList
+- lokale Favoritenliste in BookList
 - Item bekommt Button, Event nach oben zum Container werfen
 - im Container wird Favoritenliste gesammelt und (ganz einfach) angezeigt
 - Immutability (aktualisieren der lokalen Liste)
-- Button zum Leeren der Liste (sonst ist es mit 2 Büchern doof zu bedienen)
+- Button zum Leeren der Liste (sonst ist es mit 2 Büchern nicht gut zu bedienen)
 - `output()`
 
 ### [THEORIE] Services, Dependency Injection
 
 ### [BM] Service mit statischen Büchern
 
-- statische Buchliste aus BookList verschieben in neuen BookStoreService
+- statische Buchliste aus BookList verschieben in neuen `BookStoreService`
 - in BookList: `this.books.set(this.service.getBookList())`
 - nicht `getAll()`, weil wir die Methode später auch für Filter verwenden, dann sind es nicht mehr *alle* Bücher
 
@@ -61,7 +61,7 @@
 - Signal für Suchbegriff: `searchTerm = signal('')`
 - Eingabefeld mit nativen Bindings `(input)` und `[value]`
   - ggf. migrieren wir das später auf einen Forms-Ansatz
-- computed rechnet aus der Buchliste und dem Suchbegriff eine gefilterte Liste `filteredBooks` aus, die angezeigt wird
+- `computed` rechnet aus der Buchliste und dem Suchbegriff eine gefilterte Liste `filteredBooks` aus, die angezeigt wird
 
 ### [THEORIE] Routing
 
@@ -91,8 +91,9 @@
 ### [THEORIE] HTTP
 
 - fetch in der Theorie erläutern
-- HttpClient erläutern, Vorteile nennen: in Angular integriert, mit DI mockbar beim Testing, Interceptors, … (?)
-- … aber gerne auch klar sagen, dass es auch okay ist, wenn man die Angular-Lösung nicht nutzt und lieber fetch nimmt
+- HttpClient erläutern
+  - Vorteile nennen: in Angular integriert, mit DI mockbar beim Testing, Interceptors, … (?)
+  - aber auch klar sagen, dass es auch okay ist, wenn man die Angular-Lösung nicht nutzt und lieber fetch nimmt
 - hier noch keine Resource
 
 ### [BM] Daten laden mit HTTP
