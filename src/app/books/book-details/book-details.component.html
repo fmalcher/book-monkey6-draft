@@ -1,36 +1,36 @@
 @if (book.value(); as b) {
-<div class="details">
-  <h1>{{ b.title }}</h1>
-  @if (b.subtitle) {
+<article>
+  <header>
+    <h1>{{ b.title }}</h1>
+    @if (b.subtitle) {
     <p role="doc-subtitle">{{ b.subtitle }}</p>
-  }
-  <div class="header">
-    <div>
-      <h2>Authors</h2>
-      <ul>
-        @for (author of b.authors; track $index) {
+    }
+    <div class="grid">
+      <div>
+        <h2>Authors</h2>
+        <ul>
+          @for (author of b.authors; track $index) {
           <li>{{ author }}</li>
-        }
-      </ul>
+          }
+        </ul>
+      </div>
+      <div>
+        <h2>ISBN</h2>
+        {{ b.isbn }}
+      </div>
+      <div>
+        <h2>Created at</h2>
+        {{ b.createdAt }}
+      </div>
     </div>
-    <div>
-      <h2>ISBN</h2>
-      {{ b.isbn }}
-    </div>
-    <div>
-      <h2>Created at</h2>
-      {{ b.createdAt }}
-    </div>
-  </div>
-  <h2>Description</h2>
+  </header>
   <p>{{ b.description }}</p>
-  <img [src]="b.imageUrl" alt="Cover">
+  <img [src]="b.imageUrl" alt="Cover" />
 
-  <a class="button arrow-left" routerLink="..">Back to list</a>
-
-  <a class="button" routerLink="/books/9783864907791">Angular Book</a>
-  <button class="red" (click)="removeBook(b.isbn)">
-    Remove book
-  </button>
-</div>
+  <footer>
+    <a class="button arrow-left" routerLink="..">Back to list</a>
+    <a class="button" routerLink="/books/9783864907791">Angular Book</a>
+    <button class="red" (click)="removeBook(b.isbn)">Remove book</button>
+  </footer>
+</article>
 }
