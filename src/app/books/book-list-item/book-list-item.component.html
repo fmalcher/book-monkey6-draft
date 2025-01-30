@@ -1,19 +1,16 @@
 @let b = book();
 
-<div class="list-item">
-  <img [src]="b.imageUrl" alt="Cover">
-  <h2>{{ b.title }}</h2>
-  @if (b.subtitle) {
-  <p role="doc-subtitle">
-    {{ b.subtitle }}
-  </p>
-  }
-  <ul class="comma-list">
-    @for (author of b.authors; track $index) {
-    <li>{{ author }}</li>
+<article class="book-list-item">
+  <img [src]="b.imageUrl" alt="Cover" />
+  <header>
+    <h2>{{ b.title }}</h2>
+    @if (b.subtitle) {
+      <p>{{ b.subtitle }}</p>
     }
-  </ul>
-  <div>ISBN {{ b.isbn }}</div>
-  <button (click)="addToFavs()">♥️ Favorite</button>
-  <a [routerLink]="b.isbn">Details</a>
-</div>
+  </header>
+  <div>ISBN: {{ b.isbn }}</div>
+  <footer>
+    <a [routerLink]="b.isbn">Buchdetails anzeigen</a>
+    <button class="secondary" (click)="addToFavs()">Add to favorites</button>
+  </footer>
+</article>

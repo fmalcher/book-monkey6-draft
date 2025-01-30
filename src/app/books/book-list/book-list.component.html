@@ -1,27 +1,42 @@
 <h1>Books</h1>
 
-<button (click)="books.reload()">RELOAD</button>
-
-@if (books.isLoading()) {<div>LOADING</div>}
-
-<div style="padding: 1em; background: #DDD">
+<section>
   <h2>Favorite Books</h2>
-  <button class="red" (click)="clearFavList()">Clear fav list</button>
-  @for (book of favoriteBooks(); track book.isbn) {
-    <p>{{ book.title }} ({{ book.isbn }})</p>
-  } @empty { No favorite books. }
-</div>
+  <button class="secondary" (click)="clearFavList()">Clear List</button>
+  <ul>
+    @for (book of favoriteBooks(); track book.isbn) {
+      <li>{{ book.title }} ({{ book.isbn }})</li>
+    } @empty {
+      <li>No favorites added.</li>
+    }
+  </ul>
+</section>
 
-<input type="search" #searchInput (input)="this.searchTerm.set(searchInput.value)" [value]="this.searchTerm()" placeholder="Lokale Suche">
-<input type="search" #searchInput [(ngModel)]="this.searchTerm" placeholder="Lokale Suche TDF">
+<hr />
+
+<form role="search">
+  <input
+    type="search"
+    #searchInput
+    (input)="this.searchTerm.set(searchInput.value)"
+    [value]="this.searchTerm()"
+    placeholder="Suche"
+    aria-label="Suche"
+  />
+  <button (click)="books.reload()" [attr.aria-busy]="books.isLoading()">
+    Reload
+  </button>
+</form>
 
 <ul class="book-list">
   @for (b of books.value(); track b.isbn) {
-    <li>
-      <app-book-list-item [book]="b" (favAdd)="addToFavs($event)"></app-book-list-item>
-    </li>
-  }
-  @empty {
+  <li>
+    <app-book-list-item
+      [book]="b"
+      (favAdd)="addToFavs($event)"
+    ></app-book-list-item>
+  </li>
+  } @empty {
   <li>No books available.</li>
   }
 </ul>

@@ -15,7 +15,7 @@
     (click)="addAuthorControl()">
     + Author
   </button>
-  <fieldset formArrayName="authors">
+  <fieldset formArrayName="authors" role="group">
     @for (authorControl of c.authors.controls; track $index) {
     <input
       [attr.aria-label]="'Author ' + $index"

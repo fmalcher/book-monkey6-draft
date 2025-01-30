@@ -1,15 +1,18 @@
 <h1>Search Books</h1>
 
-<form>
-  <input type="search" [formControl]="searchControl" placeholder="Search">
-</form>
+<input type="search" [formControl]="searchControl" placeholder="Search" />
 
-@if (isLoading()) {<div>LOADING …</div>}
-
-@if (results().length) {
+@if (isLoading()) {
+<span aria-busy="true">Searching...</span>
+} @else if (results().length) {
+<section>
   <h2>Search results</h2>
-
-  @for (b of results(); track b.isbn) {
-    <p><a [routerLink]="['/books', b.isbn]">{{ b.title }} ({{ b.isbn }})</a></p>
-  }
+  <ul>
+    @for (b of results(); track b.isbn) {
+    <li>
+      <a [routerLink]="['/books', b.isbn]">{{ b.title }} ({{ b.isbn }})</a>
+    </li>
+    }
+  </ul>
+</section>
 }

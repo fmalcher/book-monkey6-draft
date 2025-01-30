@@ -1,3 +1,126 @@
 /* You can add global styles to this file, and also import other style files */
+@use "@picocss/pico/scss/pico" with (
+  $theme-color: "violet",
+  $semantic-root-element: "app-root",
+  $enable-semantic-container: true,
+  $enable-classes: true,
+  $enable-viewport: true,
+  $enable-responsive-spacings: true,
+  $enable-responsive-typography: true,
+  $modules: (
+    // "content/code": false,
+    // "forms/input-color": false,
+    // "forms/input-date": false,
+    // "forms/input-file": false,
+    // "forms/input-range": false,
+    // "forms/input-search": false,
+    // "components/accordion": false,
+    // "components/card": false,
+    // "components/dropdown": false,
+    // "components/loading": false,
+    // "components/modal": false,
+    // "components/nav": false,
+    // "components/progress": false,
+    // "components/tooltip": false,
+    // "utilities/accessibility": false,
+    // "utilities/reduce-motion": false,,,,,
+  )
+);
 
-@import 'book-monkey5-styles/styles.css';
+ul:has(.book-list-item) {
+  padding: 0;
+}
+ul > li:has(.book-list-item) {
+  list-style: none;
+  padding: 0;
+}
+
+section {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "headline action"
+    "body body";
+
+  > h1,
+  > h2,
+  > h3,
+  > h4,
+  > h5,
+  > h6 {
+    grid-area: headline;
+  }
+
+  > button {
+    grid-area: action;
+  }
+
+  > * {
+    grid-area: body;
+  }
+
+  margin-bottom: var(--pico-block-spacing-vertical);
+  box-shadow: var(--pico-card-box-shadow);
+  border-radius: calc(var(--pico-border-radius) * 2);
+  padding: calc(var(--pico-block-spacing-vertical) * 0.66)
+    var(--pico-block-spacing-horizontal);
+  background-color: var(--pico-card-sectioning-background-color);
+
+  h2 {
+    font-size: calc(0.8 * var(--pico-font-size));
+  }
+}
+
+article.book-list-item {
+  display: grid;
+  grid-template-columns: 78% 1fr;
+  grid-template-rows: auto 1fr auto;
+  gap: 0px 0px;
+  grid-template-areas:
+    "header thumbnail"
+    ". thumbnail"
+    "footer thumbnail";
+
+  /* override pico styles */
+  padding: 0;
+
+  img {
+    grid-area: thumbnail;
+  }
+  footer {
+    grid-area: footer;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    background-color: none;
+
+    /* override pico styles */
+    margin: 0;
+    button {
+      padding: calc(0.3 * var(--pico-form-element-spacing-vertical))
+        calc(0.8 * var(--pico-form-element-spacing-horizontal));
+    }
+  }
+  header {
+    grid-area: header;
+
+    /* override pico styles */
+    margin: 0;
+
+    h2 {
+      margin-bottom: 0.5rem;
+      font-size: calc(0.7 * var(--pico-font-size));
+
+      + p {
+        margin-bottom: 0;
+      }
+    }
+
+    + * {
+      padding: calc(var(--pico-block-spacing-vertical) * 0.3)
+        var(--pico-block-spacing-horizontal);
+    }
+  }
+}
