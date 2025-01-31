@@ -23,7 +23,7 @@
     // "components/progress": false,
     // "components/tooltip": false,
     // "utilities/accessibility": false,
-    // "utilities/reduce-motion": false,,,,,,,,,,
+    // "utilities/reduce-motion": false,,,,,,,,,,,
   )
 );
 
@@ -185,4 +185,8 @@ article {
 
 [type="search"] {
   --pico-border-radius: 0.25rem;
+}
+
+p {
+  margin-bottom: calc(0.5 * var(--pico-typography-spacing-vertical));
 }
