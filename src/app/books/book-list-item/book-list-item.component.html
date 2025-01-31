@@ -4,11 +4,13 @@
   <img [src]="b.imageUrl" alt="Cover" />
   <header>
     <h2>{{ b.title }}</h2>
+  </header>
+  <div>
     @if (b.subtitle) {
       <p role="doc-subtitle">{{ b.subtitle }}</p>
     }
-  </header>
-  <div>ISBN: {{ b.isbn }}</div>
+    ISBN: {{ b.isbn }}
+  </div>
   <footer>
     <a [routerLink]="b.isbn">Buchdetails anzeigen</a>
     <button class="secondary" (click)="addToFavs()">Add to favorites</button>

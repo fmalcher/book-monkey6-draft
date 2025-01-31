@@ -124,7 +124,7 @@ article.book-list-item {
     margin: 0;
 
     h2 + p {
-      margin-bottom: 0;
+      margin: 0;
     }
 
     + * {
@@ -171,4 +171,8 @@ article {
     align-items: baseline;
     gap: 1rem;
   }
+}
+
+[role="doc-subtitle"] {
+  letter-spacing: 2px;
 }
