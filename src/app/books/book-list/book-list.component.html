@@ -1,8 +1,6 @@
-<h1>Books</h1>
-
 <section>
-  <h2>Favorite Books</h2>
-  <button class="secondary" (click)="clearFavList()">Clear List</button>
+  <h1>Favorite Books</h1>
+  <button (click)="clearFavList()">Clear</button>
   <ul>
     @for (book of favoriteBooks(); track book.isbn) {
     <li>{{ book.title }} ({{ book.isbn }})</li>
@@ -12,25 +10,27 @@
   </ul>
 </section>
 
-<hr />
-
-<div role="group">
-  <input
-    type="search"
-    #searchInput
-    (input)="this.searchTerm.set(searchInput.value)"
-    [value]="this.searchTerm()"
-    placeholder="Suche"
-    aria-label="Suche"
-  />
+<section>
+  <h1>Books</h1>
   <button (click)="books.reload()" [attr.aria-busy]="books.isLoading()">
     Reload
   </button>
-</div>
 
-@for (b of books.value(); track b.isbn) {
-<app-book-list-item
-  [book]="b"
-  (favAdd)="addToFavs($event)"
-></app-book-list-item>
-} @empty { No books available. }
+  <div>
+    <input
+      type="search"
+      #searchInput
+      (input)="this.searchTerm.set(searchInput.value)"
+      [value]="this.searchTerm()"
+      placeholder="Suche"
+      aria-label="Suche"
+    />
+
+    @for (b of books.value(); track b.isbn) {
+    <app-book-list-item
+      [book]="b"
+      (favAdd)="addToFavs($event)"
+    ></app-book-list-item>
+    }
+  </div>
+</section>
