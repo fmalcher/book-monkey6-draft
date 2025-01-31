@@ -74,7 +74,7 @@ section {
   }
 }
 
-article.book-list-item {
+article.book-item {
   display: grid;
   grid-template-columns: 1fr minmax(10%, 200px);
   grid-template-rows: auto 1fr auto;
