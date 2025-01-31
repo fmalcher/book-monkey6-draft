@@ -162,7 +162,7 @@ h3 {
 
 h1,
 h2 {
-  margin-bottom: var(--pico-block-spacing-vertical);
+  margin-bottom: calc(0.5 * var(--pico-block-spacing-vertical));
 }
 
 nav > ul {
@@ -189,4 +189,8 @@ article {
 
 p {
   margin-bottom: calc(0.5 * var(--pico-typography-spacing-vertical));
+}
+
+ul {
+  padding-left: 1rem;
 }
