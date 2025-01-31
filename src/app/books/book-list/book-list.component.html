@@ -27,10 +27,7 @@
     />
 
     @for (b of books.value(); track b.isbn) {
-    <app-book-list-item
-      [book]="b"
-      (favAdd)="addToFavs($event)"
-    ></app-book-list-item>
+    <app-book-list-item [book]="b" (favAdd)="addToFavs($event)" />
     }
   </div>
 </section>
